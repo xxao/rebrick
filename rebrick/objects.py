@@ -461,8 +461,8 @@ class Partlist(_Entity):
         name: str or None
             Part list name.
         
-        items: int or None
-            Number of items in the list.
+        pieces: int or None
+            Number of elements in the list.
     """
     
     
@@ -471,7 +471,7 @@ class Partlist(_Entity):
         
         self.list_id = None
         self.name = None
-        self.items = None
+        self.pieces = None
         
         super(Partlist, self).__init__(**attrs)
     
@@ -479,7 +479,7 @@ class Partlist(_Entity):
     def __str__(self):
         """Gets standard string representation."""
         
-        return u"ID: %s, %s (%s)" % (self.list_id, self.name, self.items)
+        return u"ID: %s, %s (%s)" % (self.list_id, self.name, self.pieces)
     
     
     @staticmethod
@@ -499,7 +499,7 @@ class Partlist(_Entity):
         return Partlist(
             list_id = data['id'],
             name = data['name'],
-            items = data['num_parts'])
+            pieces = data['num_parts'])
 
 
 class Setlist(_Entity):
