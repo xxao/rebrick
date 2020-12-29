@@ -256,7 +256,7 @@ def get_partlist(list_id, user_token=None, api_key=None):
     return request(path, parameters)
 
 
-def get_partlist_elements(list_id, part_details=False, color_details=False, page=None, page_size=None, ordering=None, user_token=None, api_key=None):
+def get_partlist_elements(list_id, part_details=False, color_details=True, page=None, page_size=None, ordering=None, user_token=None, api_key=None):
     """
     Gets details about all elements of specific user's part list.
     

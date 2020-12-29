@@ -8,6 +8,7 @@ import json
 from . import config
 from . import api_lego as lego
 from . import api_users as users
+from .objects import COLL_SET, COLL_MOC
 from .objects import Element, Color, Part, Collection, Theme, Category
 from .rebrick import Rebrick
 

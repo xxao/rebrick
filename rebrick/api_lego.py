@@ -47,7 +47,7 @@ def get_category(category_id, api_key=None):
     
     Args:
         category_id: str or int
-            Rebrickable category id.
+            Rebrickable category ID.
         
         api_key: str or None
             Rebrickable API access key. If set to None the one set by
@@ -105,7 +105,7 @@ def get_color(color_id, api_key=None):
     
     Args:
         color_id: str or int
-            Rebrickable color id.
+            Rebrickable color ID.
         
         api_key: str or None
             Rebrickable API access key. If set to None the one set by
@@ -129,7 +129,7 @@ def get_element(element_id, api_key=None):
     
     Args:
         element_id: str or int
-            Rebrickable element id.
+            Rebrickable element ID.
         
         api_key: str or None
             Rebrickable API access key. If set to None the one set by
@@ -147,13 +147,173 @@ def get_element(element_id, api_key=None):
     return request(path, parameters)
 
 
+def get_minifigs(search=None, set_id=None, theme_id=None, min_pieces=None, max_pieces=None, page=None, page_size=None, ordering=None, api_key=None):
+    """
+    Gets details for all available minifigs with optional filters.
+    
+    Args:
+        search: str, int or None
+            Search term e.g. minifig ID or name.
+        
+        set_id: str, int or None
+            Rebrickable set ID.
+        
+        theme_id: str, int or None
+            Rebrickable theme ID.
+        
+        min_pieces: int or None
+            Minimum number of pieces.
+        
+        max_pieces: int or None
+            Maximum number of pieces.
+        
+        page: int or None
+            A page number within the paginated result set.
+        
+        page_size: int or None
+            Number of results to return per page.
+        
+        ordering: str or None
+            Specifies the field to use for results ordering.
+        
+        api_key: str or None
+            Rebrickable API access key. If set to None the one set by
+            rebrick.init() is used.
+    
+    Returns:
+        http.client.HTTPResponse
+            Server response.
+    """
+    
+    parameters = {
+        'search': search,
+        'in_set_num': set_id,
+        'in_theme_id': theme_id,
+        'min_parts': min_pieces,
+        'max_parts': max_pieces,
+        'page': page,
+        'page_size': page_size,
+        'ordering': ordering,
+        'key': api_key}
+    
+    path = config.API_LEGO_URL + "minifigs/"
+    
+    return request(path, parameters)
+
+
+def get_minifig(minifig_id, api_key=None):
+    """
+    Gets details about specific minifig.
+    
+    Args:
+        minifig_id: str or int
+            Rebrickable minifig ID.
+        
+        api_key: str or None
+            Rebrickable API access key. If set to None the one set by
+            rebrick.init() is used.
+    
+    Returns:
+        http.client.HTTPResponse
+            Server response.
+    """
+    
+    parameters = {'key': api_key}
+    
+    path = config.API_LEGO_URL + "minifigs/%s/" % minifig_id
+    
+    return request(path, parameters)
+
+
+def get_minifig_elements(minifig_id, part_details=False, color_details=True, page=None, page_size=None, ordering=None, api_key=None):
+    """
+    Gets details about available elements for specific minifig.
+    
+    Args:
+        minifig_id: str or int
+            Rebrickable minifig ID.
+        
+        part_details: bool
+            If set to True part details will be retrieved.
+        
+        color_details: bool
+            If set to True color details will be retrieved.
+        
+        page: int or None
+            A page number within the paginated result set.
+        
+        page_size: int or None
+            Number of results to return per page.
+        
+        ordering: str or None
+            Specifies the field to use for results ordering.
+        
+        api_key: str or None
+            Rebrickable API access key. If set to None the one set by
+            rebrick.init() is used.
+    
+    Returns:
+        http.client.HTTPResponse
+            Server response.
+    """
+    
+    parameters = {
+        'inc_part_details': int(part_details),
+        'inc_color_details': int(color_details),
+        'page': page,
+        'page_size': page_size,
+        'ordering': ordering,
+        'key': api_key}
+    
+    path = config.API_LEGO_URL + "minifigs/%s/parts/" % minifig_id
+    
+    return request(path, parameters)
+
+
+def get_minifig_sets(minifig_id, page=None, page_size=None, ordering=None, api_key=None):
+    """
+    Gets details about available sets containing specific minifig.
+    
+    Args:
+        minifig_id: str or int
+            Rebrickable minifig ID.
+        
+        page: int or None
+            A page number within the paginated result set.
+        
+        page_size: int or None
+            Number of results to return per page.
+        
+        ordering: str or None
+            Specifies the field to use for results ordering.
+        
+        api_key: str or None
+            Rebrickable API access key. If set to None the one set by
+            rebrick.init() is used.
+    
+    Returns:
+        http.client.HTTPResponse
+            Server response.
+    """
+    
+    parameters = {
+        'page': page,
+        'page_size': page_size,
+        'ordering': ordering,
+        'key': api_key}
+    
+    path = config.API_LEGO_URL + "minifigs/%s/sets/" % minifig_id
+    
+    return request(path, parameters)
+
+
 def get_moc(moc_id, api_key=None):
     """
     Gets details about specific MOC.
     
     Args:
         moc_id: str or int
-            Rebrickable MOC id.
+            Rebrickable MOC ID.
         
         api_key: str or None
             Rebrickable API access key. If set to None the one set by
@@ -179,7 +339,7 @@ def get_moc_elements(moc_id, part_details=False, page=None, page_size=None, orde
     
     Args:
         moc_id: str or int
-            Rebrickable MOC id.
+            Rebrickable MOC ID.
         
         part_details: bool
             If set to True part details will be retrieved.
@@ -300,7 +460,7 @@ def get_part(part_id, api_key=None):
     
     Args:
         part_id: str or int
-            Rebrickable part id.
+            Rebrickable part ID.
         
         api_key: str or None
             Rebrickable API access key. If set to None the one set by
@@ -324,10 +484,10 @@ def get_part_color(part_id, color_id, api_key=None):
     
     Args:
         part_id: str or int
-            Rebrickable part id.
+            Rebrickable part ID.
         
         color_id: str or int
-            Rebrickable color id.
+            Rebrickable color ID.
         
         api_key: str or None
             Rebrickable API access key. If set to None the one set by
@@ -351,7 +511,7 @@ def get_part_colors(part_id, page=None, page_size=None, ordering=None, api_key=N
     
     Args:
         part_id: str or int
-            Rebrickable part id.
+            Rebrickable part ID.
         
         page: int or None
             A page number within the paginated result set.
@@ -389,10 +549,10 @@ def get_part_color_sets(part_id, color_id, page=None, page_size=None, ordering=N
     
     Args:
         part_id: str or int
-            Rebrickable part id.
+            Rebrickable part ID.
         
         color_id: str or int
-            Rebrickable color id.
+            Rebrickable color ID.
         
         page: int or None
             A page number within the paginated result set.
@@ -487,7 +647,7 @@ def get_set(set_id, api_key=None):
     
     Args:
         set_id: str or int
-            Rebrickable set id.
+            Rebrickable set ID.
         
         api_key: str or None
             Rebrickable API access key. If set to None the one set by
@@ -508,13 +668,13 @@ def get_set(set_id, api_key=None):
     return request(path, parameters)
 
 
-def get_set_elements(set_id, part_details=False, color_details=False, minifig_parts=False, page=None, page_size=None, ordering=None, api_key=None):
+def get_set_elements(set_id, part_details=False, color_details=True, minifig_parts=False, page=None, page_size=None, ordering=None, api_key=None):
     """
     Gets details about available elements for specific set.
     
     Args:
         set_id: str or int
-            Rebrickable set id.
+            Rebrickable set ID.
         
         part_details: bool
             If set to True part details will be retrieved.
@@ -566,7 +726,7 @@ def get_set_alternates(set_id, page=None, page_size=None, ordering=None, api_key
     
     Args:
         set_id: str or int
-            Rebrickable set id.
+            Rebrickable set ID.
         
         page: int or None
             A page number within the paginated result set.
@@ -640,7 +800,7 @@ def get_theme(theme_id, api_key=None):
     
     Args:
         theme_id: str or int
-            Rebrickable theme id.
+            Rebrickable theme ID.
         
         api_key: str or None
             Rebrickable API access key. If set to None the one set by

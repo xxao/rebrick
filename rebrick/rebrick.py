@@ -300,6 +300,194 @@ class Rebrick(object):
         return self.get_image(url)
     
     
+    def get_minifigs(self, search=None, set_id=None, theme_id=None, min_pieces=None, max_pieces=None):
+        """
+        Gets a list of all minifigs with optional filters.
+        
+        Args:
+            search: str
+                Search query.
+            
+            set_id: str or int
+                Rebrickable set ID.
+            
+            theme_id: str or int
+                Rebrickable theme ID.
+            
+            min_pieces: int
+                Minimum number of parts.
+            
+            max_pieces: int
+                Maximum number of parts.
+        
+        Returns:
+            (rebrick.Minifig,) or None
+                Available minifigs.
+        """
+        
+        minifigs = []
+        page = None
+        
+        while True:
+            
+            # send request
+            try:
+                response = lego.get_minifigs(
+                    search = search,
+                    set_id = set_id,
+                    theme_id = theme_id,
+                    min_pieces = min_pieces,
+                    max_pieces = max_pieces,
+                    page = page,
+                    api_key = self._api_key)
+            
+            except urllib.error.HTTPError as e:
+                self._on_error(e)
+                return None
+            
+            # get response data
+            data = json.loads(response.read())
+            
+            # create minifigs
+            for item in data['results']:
+                minifigs.append(Minifig.create(item))
+            
+            # check next page
+            if data['next'] is None:
+                break
+            
+            # get next page
+            page = data['next']
+        
+        return minifigs
+    
+    
+    def get_minifig(self, minifig_id):
+        """
+        Gets details about specific minifig.
+        
+        Args:
+            minifig_id: str
+                Rebrickable minifig ID.
+        
+        Returns:
+            rebrick.Minifig or None
+                Minifig details.
+        """
+        
+        # send request
+        try:
+            response = lego.get_minifig(
+                minifig_id = minifig_id,
+                api_key = self._api_key)
+        
+        except urllib.error.HTTPError as e:
+            self._on_error(e)
+            return None
+        
+        # get response data
+        data = json.loads(response.read())
+        
+        # create minifig
+        return Minifig.create(data)
+    
+    
+    def get_minifig_elements(self, minifig_id, part_details=False):
+        """
+        Gets list of elements for a specific minifig.
+        
+        Args:
+            minifig_id: str
+                Rebrickable minifig ID.
+            
+            part_details: bool
+                If set to True part details will be retrieved.
+        
+        Returns:
+            (rebrick.Element,) or None
+                Minifig elements.
+        """
+        
+        elements = []
+        page = None
+        
+        while True:
+            
+            # send request
+            try:
+                response = lego.get_minifig_elements(
+                    minifig_id = minifig_id,
+                    part_details = part_details,
+                    page = page,
+                    api_key = self._api_key)
+            
+            except urllib.error.HTTPError as e:
+                self._on_error(e)
+                return None
+            
+            # get response data
+            data = json.loads(response.read())
+            
+            # create elements
+            for item in data['results']:
+                elements.append(Element.create(item))
+            
+            # check next page
+            if data['next'] is None:
+                break
+            
+            # get next page
+            page = data['next']
+        
+        return elements
+    
+    
+    def get_minifig_sets(self, minifig_id):
+        """
+        Gets details about available sets containing specific minifig.
+        
+        Args:
+            minifig_id: str
+                Rebrickable minifig ID.
+            
+        Returns:
+            (rebrick.Collection,) or None
+                Minifig sets.
+        """
+        
+        sets = []
+        page = None
+        
+        while True:
+            
+            # send request
+            try:
+                response = lego.get_minifig_sets(
+                    minifig_id = minifig_id,
+                    page = page,
+                    api_key = self._api_key)
+            
+            except urllib.error.HTTPError as e:
+                self._on_error(e)
+                return None
+            
+            # get response data
+            data = json.loads(response.read())
+            
+            # get sets
+            for item in data['results']:
+                sets.append(Collection.create(item, COLL_SET))
+            
+            # check next page
+            if data['next'] is None:
+                break
+            
+            # get next page
+            page = data['next']
+        
+        return sets
+    
+    
     def get_moc(self, moc_id):
         """
         Gets details about specific MOC.
@@ -327,7 +515,7 @@ class Rebrick(object):
         data = json.loads(response.read())
         
         # create set
-        return Collection.create(data, 'moc')
+        return Collection.create(data, COLL_MOC)
     
     
     def get_moc_elements(self, moc_id, part_details=False):
@@ -552,7 +740,7 @@ class Rebrick(object):
                 Rebrickable part ID.
             
             color_id: str or int
-                Rebrickable color id.
+                Rebrickable color ID.
             
         Returns:
             (rebrick.Collection,) or None
@@ -581,7 +769,7 @@ class Rebrick(object):
             
             # get sets
             for item in data['results']:
-                sets.append(Collection.create(item, 'set'))
+                sets.append(Collection.create(item, COLL_SET))
             
             # check next page
             if data['next'] is None:
@@ -647,7 +835,7 @@ class Rebrick(object):
             
             # create collections
             for item in data['results']:
-                sets.append(Collection.create(item, "set"))
+                sets.append(Collection.create(item, COLL_SET))
             
             # check next page
             if data['next'] is None:
@@ -686,7 +874,7 @@ class Rebrick(object):
         data = json.loads(response.read())
         
         # create set
-        return Collection.create(data, 'set')
+        return Collection.create(data, COLL_SET)
     
     
     def get_set_elements(self, set_id, part_details=False):
@@ -850,7 +1038,7 @@ class Rebrick(object):
             
             # create elements
             for item in data['results']:
-                sets.append(Collection.create(item, 'moc'))
+                sets.append(Collection.create(item, COLL_MOC))
             
             # check next page
             if data['next'] is None:
@@ -1220,7 +1408,7 @@ class Rebrick(object):
             # create collections
             for item in data['results']:
                 item['set']['quantity'] = item['quantity']
-                sets.append(Collection.create(item['set'], "set"))
+                sets.append(Collection.create(item['set'], COLL_SET))
             
             # check next page
             if data['next'] is None:
@@ -1341,7 +1529,7 @@ class Rebrick(object):
             # create collections
             for item in data['results']:
                 item['set']['quantity'] = item['quantity']
-                sets.append(Collection.create(item['set'], "set"))
+                sets.append(Collection.create(item['set'], COLL_SET))
             
             # check next page
             if data['next'] is None:

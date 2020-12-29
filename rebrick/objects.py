@@ -1,6 +1,10 @@
 # Created byMartin.cz
 # Copyright (c) Martin Strohalm. All rights reserved.
 
+# define constants
+COLL_MOC = 'moc'
+COLL_SET = 'set'
+
 
 class _Entity(object):
     """Provides a base class for all objects."""
@@ -79,7 +83,7 @@ class Collection(_Entity):
     Attributes:
         
         type: str
-            Collection type as 'set' or 'moc'.
+            Collection type as 'rb.COLL_SET or rb.COLL_MOC.
         
         collection_id: str, int or None
             Rebrickable collection ID.
@@ -143,7 +147,7 @@ class Collection(_Entity):
     
     
     @staticmethod
-    def create(data, set_type="set"):
+    def create(data, set_type=COLL_SET):
         """
         Creates a new instance of rebrick.Collection from given JSON data.
         
@@ -152,7 +156,7 @@ class Collection(_Entity):
                 JSON data retrieved from Rebrickable.
             
             set_type: str
-                Type of a collection to create: 'set' or 'moc'.
+                Type of a collection to create: rb.COLL_SET or rb.COLL_MOC.
         
         Returns:
             rebrick.Collection
@@ -160,26 +164,26 @@ class Collection(_Entity):
         """
         
         # create official set
-        if set_type == "set":
+        if set_type == COLL_SET:
             return Collection(
-                type = 'set',
+                type = COLL_SET,
                 collection_id = data['set_num'],
-                theme_id = data['theme_id'],
+                theme_id = data.get('theme_id', None),
                 name = data['name'],
-                year = data['year'],
+                year = data.get('year', None),
                 pieces = data['num_parts'],
                 url = data['set_url'],
                 img_url = data['set_img_url'],
                 count = data.get('quantity', None))
         
         # create MOC
-        if set_type == "moc":
+        if set_type == COLL_MOC:
             return Collection(
-                type = 'moc',
+                type = COLL_MOC,
                 collection_id = data['set_num'],
-                theme_id = data['theme_id'],
+                theme_id = data.get('theme_id', None),
                 name = data['name'],
-                year = data['year'],
+                year = data.get('year', None),
                 pieces = data['num_parts'],
                 url = data['moc_url'],
                 img_url = data['moc_img_url'],
@@ -253,9 +257,10 @@ class Color(_Entity):
             rgb = data['rgb'])
         
         # get external names and IDs
-        for name, value in data['external_ids'].items():
-            color.external_names[name] = [n for l in value['ext_descrs'] for n in l]
-            color.external_ids[name] = value['ext_ids']
+        if 'external_ids' in data:
+            for name, value in data['external_ids'].items():
+                color.external_names[name] = [n for l in value['ext_descrs'] for n in l]
+                color.external_ids[name] = value['ext_ids']
         
         return color
 
@@ -344,6 +349,66 @@ class Element(_Entity):
             is_spare = data.get('is_spare', None))
         
         return element
+
+
+class Minifig(_Entity):
+    """
+    Represents a Rebrickable minifig definition.
+    
+    Attributes:
+        
+        minifig_id: str or None
+            Rebrickable minifig ID.
+        
+        name: str or None
+            Rebrickable color name.
+        
+        pieces: int or None
+            Number of pieces in minifig.
+        
+        img_url: str or None
+            Rebrickable image url.
+    """
+    
+    
+    def __init__(self, **attrs):
+        """Initializes a new instance of rebrick.Element."""
+        
+        self.minifig_id = None
+        self.name = None
+        self.pieces = None
+        self.img_url = None
+        
+        super().__init__(**attrs)
+    
+    
+    def __str__(self):
+        """Gets standard string representation."""
+        
+        return "Minifig ID: %s, %s" % (self.minifig_id, self.name)
+    
+    
+    @staticmethod
+    def create(data):
+        """
+        Creates a new instance of rebrick.Minifig from given JSON data.
+        
+        Args:
+            data: dict
+                JSON data retrieved from Rebrickable.
+        
+        Returns:
+            rebrick.Minifig
+                Initialized minifig.
+        """
+        
+        minifig = Minifig(
+            minifig_id = data.get('set_num', None),
+            name = data.get('name', None),
+            pieces = data.get('num_parts', None),
+            img_url = data.get('set_img_url', None))
+        
+        return minifig
 
 
 class Part(_Entity):
