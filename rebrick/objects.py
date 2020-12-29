@@ -9,8 +9,6 @@ class _Entity(object):
     def __init__(self, **attrs):
         """Initializes a new instance of rebrick.Entity."""
         
-        super(_Entity, self).__init__()
-        
         # set given attributes
         for name, value in attrs.items():
             if hasattr(self, name):
@@ -22,7 +20,7 @@ class _Entity(object):
     def __repr__(self):
         """Gets debug string representation."""
         
-        return u"%s(%s)" % (self.__class__.__name__, self.__str__())
+        return "%s(%s)" % (self.__class__.__name__, self.__str__())
 
 
 class Category(_Entity):
@@ -45,13 +43,13 @@ class Category(_Entity):
         self.category_id = None
         self.name = None
         
-        super(Category, self).__init__(**attrs)
+        super().__init__(**attrs)
     
     
     def __str__(self):
         """Gets standard string representation."""
         
-        return u"Category ID: %s %s" % (self.category_id, self.name)
+        return "Category ID: %s %s" % (self.category_id, self.name)
     
     
     @staticmethod
@@ -135,13 +133,13 @@ class Collection(_Entity):
         
         self.count = None
         
-        super(Collection, self).__init__(**attrs)
+        super().__init__(**attrs)
     
     
     def __str__(self):
         """Gets standard string representation."""
         
-        return u"%s ID: %s, %s" % (self.type.upper(), self.collection_id, self.name)
+        return "%s ID: %s, %s" % (self.type.upper(), self.collection_id, self.name)
     
     
     @staticmethod
@@ -411,13 +409,13 @@ class Part(_Entity):
         self.molds = []
         self.alternates = []
         
-        super(Part, self).__init__(**attrs)
+        super().__init__(**attrs)
     
     
     def __str__(self):
         """Gets standard string representation."""
         
-        return u"Part ID: %s, %s" % (self.part_id, self.name)
+        return "Part ID: %s, %s" % (self.part_id, self.name)
     
     
     @staticmethod
@@ -473,13 +471,13 @@ class Partlist(_Entity):
         self.name = None
         self.pieces = None
         
-        super(Partlist, self).__init__(**attrs)
+        super().__init__(**attrs)
     
     
     def __str__(self):
         """Gets standard string representation."""
         
-        return u"ID: %s, %s (%s)" % (self.list_id, self.name, self.pieces)
+        return "ID: %s, %s (%s)" % (self.list_id, self.name, self.pieces)
     
     
     @staticmethod
@@ -526,13 +524,13 @@ class Setlist(_Entity):
         self.name = None
         self.items = None
         
-        super(Setlist, self).__init__(**attrs)
+        super().__init__(**attrs)
     
     
     def __str__(self):
         """Gets standard string representation."""
         
-        return u"ID: %s, %s (%s)" % (self.list_id, self.name, self.items)
+        return "ID: %s, %s (%s)" % (self.list_id, self.name, self.items)
     
     
     @staticmethod
@@ -579,13 +577,13 @@ class Theme(_Entity):
         self.parent_id = None
         self.name = None
         
-        super(Theme, self).__init__(**attrs)
+        super().__init__(**attrs)
     
     
     def __str__(self):
         """Gets standard string representation."""
         
-        return u"Theme ID: %s (%s) %s" % (self.theme_id, self.parent_id, self.name)
+        return "Theme ID: %s (%s) %s" % (self.theme_id, self.parent_id, self.name)
     
     
     @staticmethod
