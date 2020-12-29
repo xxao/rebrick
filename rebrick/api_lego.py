@@ -508,7 +508,7 @@ def get_set(set_id, api_key=None):
     return request(path, parameters)
 
 
-def get_set_elements(set_id, part_details=False, page=None, page_size=None, ordering=None, api_key=None):
+def get_set_elements(set_id, part_details=False, color_details=False, minifig_parts=False, page=None, page_size=None, ordering=None, api_key=None):
     """
     Gets details about available elements for specific set.
     
@@ -518,6 +518,12 @@ def get_set_elements(set_id, part_details=False, page=None, page_size=None, orde
         
         part_details: bool
             If set to True part details will be retrieved.
+        
+        color_details: bool
+            If set to True color details will be retrieved.
+        
+        minifig_parts: bool
+            If set to True, minifig parts wil be retrieved.
         
         page: int or None
             A page number within the paginated result set.
@@ -541,7 +547,9 @@ def get_set_elements(set_id, part_details=False, page=None, page_size=None, orde
         set_id = "%s-1" % set_id
     
     parameters = {
-        'inc_part_details': int(part_details) or None,
+        'inc_part_details': int(part_details),
+        'inc_color_details': int(color_details),
+        'inc_minifig_parts': int(minifig_parts),
         'page': page,
         'page_size': page_size,
         'ordering': ordering,
