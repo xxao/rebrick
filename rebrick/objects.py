@@ -233,7 +233,7 @@ class Color(_Entity):
     def __str__(self):
         """Gets standard string representation."""
         
-        return u"Color ID: %s, %s, %s" % (self.color_id, self.name, self.rgb)
+        return "Color ID: %s, %s, %s" % (self.color_id, self.name, self.rgb)
     
     
     @staticmethod
@@ -315,7 +315,7 @@ class Element(_Entity):
     def __str__(self):
         """Gets standard string representation."""
         
-        return u"Element ID: %s, %s, %s" % (self.element_id, self.part, self.color)
+        return "Element ID: %s, %s, %s" % (self.element_id, self.part, self.color)
     
     
     @staticmethod
