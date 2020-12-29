@@ -668,6 +668,46 @@ def get_set(set_id, api_key=None):
     return request(path, parameters)
 
 
+def get_set_alternates(set_id, page=None, page_size=None, ordering=None, api_key=None):
+    """
+    Gets details about available alternate builds for specific set.
+    
+    Args:
+        set_id: str or int
+            Rebrickable set ID.
+        
+        page: int or None
+            A page number within the paginated result set.
+        
+        page_size: int or None
+            Number of results to return per page.
+        
+        ordering: str or None
+            Specifies the field to use for results ordering.
+        
+        api_key: str or None
+            Rebrickable API access key. If set to None the one set by
+            rebrick.init() is used.
+    
+    Returns:
+        http.client.HTTPResponse
+            Server response.
+    """
+    
+    if '-' not in str(set_id):
+        set_id = "%s-1" % set_id
+    
+    parameters = {
+        'page': page,
+        'page_size': page_size,
+        'ordering': ordering,
+        'key': api_key}
+    
+    path = config.API_LEGO_URL + "sets/%s/alternates/" % set_id
+    
+    return request(path, parameters)
+
+
 def get_set_elements(set_id, part_details=False, color_details=True, minifig_parts=False, page=None, page_size=None, ordering=None, api_key=None):
     """
     Gets details about available elements for specific set.
@@ -720,9 +760,9 @@ def get_set_elements(set_id, part_details=False, color_details=True, minifig_par
     return request(path, parameters)
 
 
-def get_set_alternates(set_id, page=None, page_size=None, ordering=None, api_key=None):
+def get_set_minifigs(set_id, page=None, page_size=None, ordering=None, api_key=None):
     """
-    Gets details about available alternate builds for specific set.
+    Gets details about available minifigs for specific set.
     
     Args:
         set_id: str or int
@@ -755,7 +795,7 @@ def get_set_alternates(set_id, page=None, page_size=None, ordering=None, api_key
         'ordering': ordering,
         'key': api_key}
     
-    path = config.API_LEGO_URL + "sets/%s/alternates/" % set_id
+    path = config.API_LEGO_URL + "sets/%s/minifigs/" % set_id
     
     return request(path, parameters)
 

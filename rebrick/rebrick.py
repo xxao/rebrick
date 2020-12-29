@@ -877,6 +877,52 @@ class Rebrick(object):
         return Collection.create(data, COLL_SET)
     
     
+    def get_set_alternates(self, set_id):
+        """
+        Gets details about available alternate builds for specific set.
+        
+        Args:
+            set_id: str or int
+                Rebrickable set ID.
+        
+        Returns:
+            (rebrick.Collection,) or None
+                Alternate sets.
+        """
+        
+        sets = []
+        page = None
+        
+        while True:
+            
+            # send request
+            try:
+                response = lego.get_set_alternates(
+                    set_id = set_id,
+                    page = page,
+                    api_key = self._api_key)
+            
+            except urllib.error.HTTPError as e:
+                self._on_error(e)
+                return None
+            
+            # get response data
+            data = json.loads(response.read())
+            
+            # create elements
+            for item in data['results']:
+                sets.append(Collection.create(item, COLL_MOC))
+            
+            # check next page
+            if data['next'] is None:
+                break
+            
+            # get next page
+            page = data['next']
+        
+        return sets
+    
+    
     def get_set_elements(self, set_id, part_details=False):
         """
         Gets list of elements for a specific set.
@@ -925,6 +971,52 @@ class Rebrick(object):
             page = data['next']
         
         return elements
+    
+    
+    def get_set_minifigs(self, set_id):
+        """
+        Gets details about available minifigs for specific set.
+        
+        Args:
+            set_id: str or int
+                Rebrickable set ID.
+        
+        Returns:
+            (rebrick.Minifig,) or None
+                Set minifigs.
+        """
+        
+        minifigs = []
+        page = None
+        
+        while True:
+            
+            # send request
+            try:
+                response = lego.get_set_minifigs(
+                    set_id = set_id,
+                    page = page,
+                    api_key = self._api_key)
+            
+            except urllib.error.HTTPError as e:
+                self._on_error(e)
+                return None
+            
+            # get response data
+            data = json.loads(response.read())
+            
+            # create minifigs
+            for item in data['results']:
+                minifigs.append(Minifig.create(item))
+            
+            # check next page
+            if data['next'] is None:
+                break
+            
+            # get next page
+            page = data['next']
+        
+        return minifigs
     
     
     def get_set_themes(self, set_id):
@@ -1002,52 +1094,6 @@ class Rebrick(object):
         
         url = config.SET_IMG_URL.format(set_id)
         return self.get_image(url)
-    
-    
-    def get_set_alternates(self, set_id):
-        """
-        Gets details about available alternate builds for specific set.
-        
-        Args:
-            set_id: str or int
-                Rebrickable set ID.
-        
-        Returns:
-            (rebrick.Collection,) or None
-                Alternate sets.
-        """
-        
-        sets = []
-        page = None
-        
-        while True:
-            
-            # send request
-            try:
-                response = lego.get_set_alternates(
-                    set_id = set_id,
-                    page = page,
-                    api_key = self._api_key)
-            
-            except urllib.error.HTTPError as e:
-                self._on_error(e)
-                return None
-            
-            # get response data
-            data = json.loads(response.read())
-            
-            # create elements
-            for item in data['results']:
-                sets.append(Collection.create(item, COLL_MOC))
-            
-            # check next page
-            if data['next'] is None:
-                break
-            
-            # get next page
-            page = data['next']
-        
-        return sets
     
     
     def get_themes(self):
