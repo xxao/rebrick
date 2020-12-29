@@ -138,7 +138,7 @@ def get_elements(part_id=None, part_cat_id=None, color_id=None, part_details=Fal
         'part_num': part_id,
         'part_cat_id': part_cat_id,
         'color_id': color_id,
-        'inc_part_details': int(part_details) or None,
+        'inc_part_details': int(part_details),
         'page': page,
         'page_size': page_size,
         'key': api_key}
@@ -180,7 +180,7 @@ def get_lost_elements(part_details=False, page=None, page_size=None, ordering=No
     """
     
     parameters = {
-        'inc_part_details': int(part_details) or None,
+        'inc_part_details': int(part_details),
         'page': page,
         'page_size': page_size,
         'ordering': ordering,
@@ -256,7 +256,7 @@ def get_partlist(list_id, user_token=None, api_key=None):
     return request(path, parameters)
 
 
-def get_partlist_elements(list_id, part_details=False, page=None, page_size=None, ordering=None, user_token=None, api_key=None):
+def get_partlist_elements(list_id, part_details=False, color_details=False, page=None, page_size=None, ordering=None, user_token=None, api_key=None):
     """
     Gets details about all elements of specific user's part list.
     
@@ -266,6 +266,9 @@ def get_partlist_elements(list_id, part_details=False, page=None, page_size=None
         
         part_details: bool
             If set to True part details will be retrieved.
+        
+        color_details: bool
+            If set to True color details will be retrieved.
         
         page: int or None
             A page number within the paginated result set.
@@ -290,7 +293,8 @@ def get_partlist_elements(list_id, part_details=False, page=None, page_size=None
     """
     
     parameters = {
-        'inc_part_details': int(part_details) or None,
+        'inc_part_details': int(part_details),
+        'inc_color_details': int(color_details),
         'page': page,
         'page_size': page_size,
         'ordering': ordering,

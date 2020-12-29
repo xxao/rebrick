@@ -206,7 +206,7 @@ def get_moc_elements(moc_id, part_details=False, page=None, page_size=None, orde
         moc_id = "MOC-%s" % moc_id
     
     parameters = {
-        'inc_part_details': int(part_details) or None,
+        'inc_part_details': int(part_details),
         'page': page,
         'page_size': page_size,
         'ordering': ordering,
@@ -283,7 +283,7 @@ def get_parts(search=None, part_id=None, part_ids=None, part_cat_id=None, color_
         'brickowl_id': brickowl_id,
         'lego_id': lego_id,
         'ldraw_id': ldraw_id,
-        'inc_part_details': int(part_details) or None,
+        'inc_part_details': int(part_details),
         'page': page,
         'page_size': page_size,
         'ordering': ordering,
