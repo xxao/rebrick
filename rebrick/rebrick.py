@@ -33,7 +33,7 @@ class Rebrick(object):
                 normally.
         """
         
-        super(Rebrick, self).__init__()
+        super().__init__()
         
         self._api_key = api_key
         self._user_token = user_token
@@ -297,7 +297,7 @@ class Rebrick(object):
         """
     
         url = config.ELEMENT_IMG_URL.format(element_id)
-        return self.get_image(url)
+        return self.get_file(url)
     
     
     def get_minifigs(self, search=None, set_id=None, theme_id=None, min_pieces=None, max_pieces=None):
@@ -1093,7 +1093,7 @@ class Rebrick(object):
             set_id = "%s-1" % set_id
         
         url = config.SET_IMG_URL.format(set_id)
-        return self.get_image(url)
+        return self.get_file(url)
     
     
     def get_themes(self):
@@ -1587,17 +1587,17 @@ class Rebrick(object):
         return sets
     
     
-    def get_image(self, url):
+    def get_file(self, url):
         """
-        Downloads image from Rebrickable.
+        Downloads a file from given URL.
         
         Args:
             url: str
-                URL of the image to download.
+                URL of the file to download.
         
         Returns:
             bytes
-                Image data.
+                File data.
         """
         
         # make request
