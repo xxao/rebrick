@@ -14,4 +14,4 @@ ELEMENT_IMG_URL = "https://m.rebrickable.com/media/parts/elements/{0}.jpg"
 SET_IMG_URL = "https://m.rebrickable.com/media/sets/{0}.jpg"
 
 # define minimum delay between requests in seconds
-REQUEST_DELAY = 0.2
+REQUEST_DELAY = 1.1
