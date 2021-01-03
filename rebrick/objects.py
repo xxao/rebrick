@@ -227,7 +227,7 @@ class Color(_Entity):
         self.external_names = {}
         self.external_ids = {}
         
-        super(Color, self).__init__(**attrs)
+        super().__init__(**attrs)
     
     
     def __str__(self):
@@ -309,7 +309,7 @@ class Element(_Entity):
         self.count = None
         self.is_spare = None
         
-        super(Element, self).__init__(**attrs)
+        super().__init__(**attrs)
     
     
     def __str__(self):
@@ -629,7 +629,7 @@ class Theme(_Entity):
         
         parent_id: int or None
             Rebrickable parent theme ID.
-            
+        
         name: str
             Theme name.
     """

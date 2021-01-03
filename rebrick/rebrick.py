@@ -923,7 +923,7 @@ class Rebrick(object):
         return sets
     
     
-    def get_set_elements(self, set_id, part_details=False):
+    def get_set_elements(self, set_id, part_details=False, color_details=True, minifig_parts=False):
         """
         Gets list of elements for a specific set.
         
@@ -933,6 +933,12 @@ class Rebrick(object):
             
             part_details: bool
                 If set to True part details will be retrieved.
+            
+            color_details: bool
+                If set to True color details will be retrieved.
+            
+            minifig_parts: bool
+                If set to True, minifig parts wil be retrieved.
         
         Returns:
             (rebrick.Element,) or None
@@ -949,6 +955,8 @@ class Rebrick(object):
                 response = lego.get_set_elements(
                     set_id = set_id,
                     part_details = part_details,
+                    color_details = color_details,
+                    minifig_parts = minifig_parts,
                     page = page,
                     api_key = self._api_key)
             
