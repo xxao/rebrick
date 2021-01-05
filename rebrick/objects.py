@@ -254,7 +254,8 @@ class Color(_Entity):
         color = Color(
             color_id = data.get('id'),
             name = data['name'],
-            rgb = data['rgb'])
+            rgb = data['rgb'],
+            is_trans = data['is_trans'])
         
         # get external names and IDs
         if 'external_ids' in data:
@@ -377,7 +378,10 @@ class Minifig(_Entity):
         self.minifig_id = None
         self.name = None
         self.pieces = None
+        
         self.img_url = None
+        
+        self.count = None
         
         super().__init__(**attrs)
     
@@ -404,9 +408,10 @@ class Minifig(_Entity):
         
         minifig = Minifig(
             minifig_id = data.get('set_num', None),
-            name = data.get('name', None),
+            name = data.get('set_name', None),
             pieces = data.get('num_parts', None),
-            img_url = data.get('set_img_url', None))
+            img_url = data.get('set_img_url', None),
+            count = data.get('quantity', None))
         
         return minifig
 

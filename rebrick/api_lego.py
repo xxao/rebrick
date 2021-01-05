@@ -430,7 +430,7 @@ def get_parts(search=None, part_id=None, part_ids=None, part_cat_id=None, color_
             Server response.
     """
     
-    if part_ids:
+    if part_ids and not isinstance(part_id, str):
         part_ids = ",".join(str(i) for i in part_ids)
     
     parameters = {

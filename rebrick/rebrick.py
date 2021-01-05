@@ -286,18 +286,31 @@ class Rebrick(object):
     def get_element_image(self, element_id):
         """
         Gets image of specific element.
-
+        
         Args:
             element_id: str or int
                 Rebrickable element ID.
-
+        
         Returns:
             bytes or None
                 Image data.
         """
-    
-        url = config.ELEMENT_IMG_URL.format(element_id)
-        return self.get_file(url)
+        
+        # get image from Rebrickable
+        try:
+            url = config.RB_ELEMENT_IMG_URL.format(element_id)
+            return self.get_file(url)
+        except:
+            pass
+        
+        # get image from LEGO
+        try:
+            url = config.LEGO_ELEMENT_IMG_URL.format(element_id)
+            return self.get_file(url)
+        except:
+            pass
+        
+        return None
     
     
     def get_minifigs(self, search=None, set_id=None, theme_id=None, min_pieces=None, max_pieces=None):
@@ -1101,7 +1114,11 @@ class Rebrick(object):
             set_id = "%s-1" % set_id
         
         url = config.SET_IMG_URL.format(set_id)
-        return self.get_file(url)
+        
+        try:
+            return self.get_file(url)
+        except:
+            return None
     
     
     def get_themes(self):
