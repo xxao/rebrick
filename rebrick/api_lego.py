@@ -309,7 +309,7 @@ def get_minifig_sets(minifig_id, page=None, page_size=None, ordering=None, api_k
 
 def get_moc(moc_id, api_key=None):
     """
-    Gets details about specific MOC.
+    Gets details about specific MOC. This is no longer supported by API!
     
     Args:
         moc_id: str or int
@@ -324,6 +324,9 @@ def get_moc(moc_id, api_key=None):
             Server response.
     """
     
+    # no longer supported
+    raise NotImplementedError("MOCs are no longer available via API.")
+    
     if 'MOC' not in str(moc_id):
         moc_id = "MOC-%s" % moc_id
     
@@ -335,7 +338,8 @@ def get_moc(moc_id, api_key=None):
 
 
 def get_moc_elements(moc_id, part_details=False, page=None, page_size=None, ordering=None, api_key=None):
-    """Gets list of elements for a specific MOC.
+    """
+    Gets list of elements for a specific MOC. This is no longer supported by API!
     
     Args:
         moc_id: str or int
@@ -361,6 +365,9 @@ def get_moc_elements(moc_id, part_details=False, page=None, page_size=None, orde
         http.client.HTTPResponse
             Server response.
     """
+    
+    # no longer supported
+    raise NotImplementedError("MOCs are no longer available via API.")
     
     if 'MOC' not in str(moc_id):
         moc_id = "MOC-%s" % moc_id
