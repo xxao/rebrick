@@ -7,7 +7,7 @@ import rebrick
 # Before you can start this example be sure to fill in following variable with
 # your specific value:
 
-API_KEY = "key"
+API_KEY = "your_key"
 
 # set default token for the whole module
 rebrick.init(API_KEY)
@@ -37,13 +37,13 @@ response = rebrick.lego.get_element(300121)
 print(json.loads(response.read()))
 print()
 
-print("Get MOC:")
-response = rebrick.lego.get_moc(24522)
+print("Get minifig:")
+response = rebrick.lego.get_minifig('fig-005891')
 print(json.loads(response.read()))
 print()
 
-print("Get MOC elements:")
-response = rebrick.lego.get_moc_elements(24522)
+print("Get minifig elements:")
+response = rebrick.lego.get_minifig_elements('fig-005891')
 print(json.loads(response.read()))
 print()
 
