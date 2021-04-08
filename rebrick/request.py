@@ -40,7 +40,7 @@ def request(url, parameters={}, post=False):
     parameters['key'] = assert_api_key(parameters.get('key', None))
     
     # parse page number
-    if 'page' in parameters and parameters['page'].startswith("http"):
+    if 'page' in parameters and isinstance(parameters['page'], str) and parameters['page'].startswith("http"):
         parameters['page'] = _PAGE_PATTERN.findall(parameters['page'])[0]
     
     # prepare options
