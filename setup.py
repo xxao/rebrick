@@ -27,7 +27,7 @@ setup(
     version = version,
     description = 'Python access to Rebrickable API.',
     long_description = long_description,
-    long_description_content_type='text/markdown',
+    long_description_content_type = 'text/markdown',
     url = 'https://github.com/xxao/rebrick',
     author = 'Martin Strohalm',
     author_email = '',
