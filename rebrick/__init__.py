@@ -2,7 +2,7 @@
 # Copyright (c) Martin Strohalm. All rights reserved.
 
 # set version
-version = (0, 3, 1)
+version = (0, 4, 0)
 
 import json
 from . import config

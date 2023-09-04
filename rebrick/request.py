@@ -1,6 +1,7 @@
 # Created byMartin.cz
 # Copyright (c) Martin Strohalm. All rights reserved.
 
+import ssl
 import re
 import time
 import urllib.parse
@@ -12,6 +13,9 @@ _last_request_time = 0
 
 # define page pattern
 _PAGE_PATTERN = re.compile("page=([0-9]+)")
+
+# handle SSL certificate
+_SSL_CONTEXT = ssl._create_unverified_context()
 
 
 def request(url, parameters={}, post=False):
@@ -58,10 +62,10 @@ def request(url, parameters={}, post=False):
     
     # send request
     if post:
-        handle = urllib.request.urlopen(url, options.encode('utf8'))
+        handle = urllib.request.urlopen(url, options.encode('utf8'), context=_SSL_CONTEXT)
     else:
         url = "%s?%s" % (url, options)
-        handle = urllib.request.urlopen(url)
+        handle = urllib.request.urlopen(url, context=_SSL_CONTEXT)
     
     return handle
 

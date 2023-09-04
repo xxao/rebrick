@@ -3,8 +3,7 @@
 from setuptools import setup, find_packages
 
 # get version
-from rebrick import version
-version = '.'.join(str(x) for x in version)
+version = '0.4.0'
 
 # get description
 with open("README.md", "r") as fh:
